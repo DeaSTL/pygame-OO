@@ -1,11 +1,14 @@
 import random
 import math
+from pygame import Rect
 class particle(object):
 	def __init__(self,position):
 		self.partPosition = list(position)
 		self.speed = 1 #random.randrange(1,15)
 		self.angle = 0
 		self.size = 1
+
+		self.rect = Rect(partPosition[0],partPosition[1],self.size,self,size)
 
 		self.XSlope = math.cos(math.radians(self.angle)) 
 		self.YSlope = math.sin(math.radians(self.angle))
@@ -45,6 +48,8 @@ class particle(object):
 		return self.size
 	def getType(self):
 		return self.name
+	def collides(self,rect):
+		return object.colliderect(rect)
 
 class sand(particle,object):
 	def __init__(self,position):

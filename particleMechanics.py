@@ -3,6 +3,7 @@ import mathaddons as ma
 import particle
 import math
 particle_array = []
+largeSand = []
 
 class mechanics(object):
 	def createParticles(self):
@@ -18,6 +19,9 @@ class mechanics(object):
 		self.createParticles()
 	def addParticle(self,particle):
 		particle_array.append(particle)
+		for i in range(0,len(particle_array)):
+			if particle_array[i].getType() == "sand_large":
+				largeSand.append(i)
 
 	def drawParticles(self):
 		global particle_array
@@ -43,10 +47,9 @@ class mechanics(object):
 			if part.getPositionY() < 0:
 				part.setSpeed(-part.getSpeed())
 				part.setAngle(part.getAngle()+90)
-			for cpart in particle_array:
-				if cpart.getType() == "sand_large":
-					if part.get
-						pass
+			for i in range(0,len(largeSand)):
+				if part.rect.collides(particle_array[i].rect):
+					print("collides")
 			#if self.pygame.mouse.get_focused():	
 			#	if ma.distance(part.getPositionX(),part.getPositionY(),mouse_pos[0],mouse_pos[1]) < 10:
 			#		part.setSpeed(0)
@@ -55,7 +58,7 @@ class mechanics(object):
 			#		part.setSpeed(5)
 	def pullToPoint(self,x,y):
 		for part in particle_array:
-			part.setAngle(-math.degrees(math.atan2(part.getPositionX()-x,part.getPositionY()-y))-90)
+			part.setAngle(math.degrees(math.atan2(part.getPositionX()-x,part.getPositionY()-y))-90)
 	def moveToPoint(self,x,y):
 		for part in particle_array:
 			part.setPosition((x,y))
