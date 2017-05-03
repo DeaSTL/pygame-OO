@@ -1,11 +1,12 @@
 import particle
 import pygameapp
 import random
+import mathaddons as ma
 particle_array = []
 class main(pygameapp.App):
 		
 	def createParticles(self):
-		for i in range(1,10000):
+		for i in range(1,1000):
 			global particle_array
 			rand_pos = (random.randrange(0,self.getWindowWidth()),
 				random.randrange(0,self.getWindowHeight()))
@@ -21,6 +22,7 @@ class main(pygameapp.App):
 			part.setPositionY(part.getPositionY()+part.speed*part.getSlope()[1])
 	def checkCollision(self):
 		for part in particle_array:
+			mouse_pos = self.pygame.mouse.get_pos()
 			if part.getPositionX() > self.getWindowWidth():
 				part.setSpeed(-part.getSpeed())
 				part.setAngle(part.getAngle()+90)
@@ -33,6 +35,9 @@ class main(pygameapp.App):
 			if part.getPositionY() < 0:
 				part.setSpeed(-part.getSpeed())
 				part.setAngle(part.getAngle()+90)
+			if ma.distance(part.getPositionX(),part.getPositionY(),mouse_pos[0],mouse_pos[1]) < 100:
+				part.setPositionX(part.getPositionX()+100*part.getSlope()[0])
+				part.setPositionY(part.getPositionY()+100*part.getSlope()[1])
 	def onStart(self):
 		self.createParticles()
 		self.drawParticles()
