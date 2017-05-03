@@ -24,10 +24,14 @@ class App(object):
 		pass
 	def onStart(self):
 		pass
+	def onMousePressed(self,x,y,button):
+		pass
+	def onKeyPressed(self,key):
+		pass
 	def start(self):
 		self.onStart()
 		while self.running:
-
+			self.ticks = self.pygame.time.get_ticks()
 			self.display.fill((0,0,0))
 			self.onExecute()
 			self.clock.tick(self.frameRate)
@@ -43,6 +47,11 @@ class App(object):
 					self.pygame.RESIZABLE)
 					self.windowWidth = event.w
 					self.windowHeight = event.h
+				if event.type == self.pygame.MOUSEBUTTONDOWN:
+					print(event.button)
+					self.onMousePressed(event.pos[0],event.pos[1],event.button)
+				if event.type == self.pygame.KEYDOWN:
+					self.onKeyPressed(event.key)
 
 	def getWindowHeight(self): return self.windowHeight
 	def getWindowWidth(self): return self.windowWidth

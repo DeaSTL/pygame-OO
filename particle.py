@@ -3,7 +3,7 @@ import math
 class sand(object):
 	def __init__(self,position):
 		self.partPosition = list(position)
-		self.speed = random.randrange(1,15)
+		self.speed = 5 #random.randrange(1,15)
 		self.angle = random.randrange(1,180)
 
 		self.XSlope = math.cos(math.radians(self.angle)) 
