@@ -38,10 +38,13 @@ class main(pygameapp.App):
 			if ma.distance(part.getPositionX(),part.getPositionY(),mouse_pos[0],mouse_pos[1]) < 50:
 				part.setPositionX(part.getPositionX()+100*part.getSlope()[0])
 				part.setPositionY(part.getPositionY()+100*part.getSlope()[1])
+	def drawMouseRange(self):
+		self.pygame.draw.circle(self.display,(10,10,10),self.pygame.mouse.get_pos(),50,0)
 	def onStart(self):
 		self.createParticles()
 		self.drawParticles()
 	def onExecute(self):
+		self.drawMouseRange()
 		self.drawParticles()
 		self.applyForce()
 		self.checkCollision()
