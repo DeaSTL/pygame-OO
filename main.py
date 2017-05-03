@@ -6,7 +6,7 @@ particle_array = []
 class main(pygameapp.App):
 		
 	def createParticles(self):
-		for i in range(1,1000):
+		for i in range(1,100):
 			global particle_array
 			rand_pos = (random.randrange(0,self.getWindowWidth()),
 				random.randrange(0,self.getWindowHeight()))
@@ -49,5 +49,5 @@ class main(pygameapp.App):
 		self.applyForce()
 		self.checkCollision()
 		
-main(500,500,60).start()
+main(500,500,20).start()
 
