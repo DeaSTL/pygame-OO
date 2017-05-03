@@ -1,7 +1,8 @@
+import random
 class sand(object):
 	def __init__(self,position):
 		self.partPosition = list(position)
-		self.speed = 3
+		self.speed = random.randrange(1,15)
 
 		self.partX = self.partPosition[0]
 		self.partY = self.partPosition[1]
