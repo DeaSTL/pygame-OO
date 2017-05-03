@@ -5,7 +5,7 @@ import math
 particle_array = []
 class mechanics(object):
 	def createParticles(self):
-		for i in range(1,50):
+		for i in range(1,500):
 			global particle_array
 			rand_pos = (random.randrange(0,self.getWindowWidth()),
 				random.randrange(0,self.getWindowHeight()))
@@ -18,7 +18,7 @@ class mechanics(object):
 	def drawParticles(self):
 		global particle_array
 		for pos in particle_array:
-			self.pygame.draw.rect(self.display,pos.color,(pos.getPosition()[0],pos.getPosition()[1],10,10),0)
+			self.pygame.draw.rect(self.display,pos.color,(pos.getPosition()[0],pos.getPosition()[1],5,5),0)
 	def applyForce(self):
 		global particle_array
 		for part in particle_array:
@@ -39,18 +39,18 @@ class mechanics(object):
 			if part.getPositionY() < 0:
 				part.setSpeed(-part.getSpeed())
 				part.setAngle(part.getAngle()+90)
-			if ma.distance(part.getPositionX(),part.getPositionY(),mouse_pos[0],mouse_pos[1]) < 50:
+			if ma.distance(part.getPositionX(),part.getPositionY(),mouse_pos[0],mouse_pos[1]) < 10:
 				part.setSpeed(0)
 				self.pullToPoint(mouse_pos[0],mouse_pos[1])
 			elif not ma.distance(part.getPositionX(),part.getPositionY(),mouse_pos[0],mouse_pos[1]) < 50:
 				part.setSpeed(5)
 
-			self.pullToPoint(mouse_pos[0],mouse_pos[1])
+			
 	def pullToPoint(self,x,y):
 		for part in particle_array:
-			part.setAngle(-math.degrees(math.atan2(part.getPositionX()-x,part.getPositionY()-y)))
+			part.setAngle(-math.degrees(math.atan2(part.getPositionX()-x,part.getPositionY()-y))-90)
 	def moveToPoint(self,x,y):
 		for part in particle_array:
 			part.setPosition((x,y))
 	def drawMouseRange(self):
-		self.pygame.draw.circle(self.display,(10,10,10),self.pygame.mouse.get_pos(),50,0)
+		self.pygame.draw.circle(self.display,(10,10,10),self.pygame.mouse.get_pos(),10,0)
