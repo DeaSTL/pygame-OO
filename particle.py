@@ -1,18 +1,24 @@
 class sand(object):
 	def __init__(self,position):
-		self.partPosition = position
-		self.partX = partPosition[0]
-		self.partY = partPosition[1]
+		self.partPosition = list(position)
+		self.speed = 3
+
+		self.partX = self.partPosition[0]
+		self.partY = self.partPosition[1]
 	def setPosition(self,position):
 		self.partPosition = position
-	def setX(self,positionX):
+	def setPositionX(self,positionX):
 		self.partPosition[0] = positionX
-	def setY(self,positionY):
+	def setPositionY(self,positionY):
 		self.partPosition[1] = positionY
+	def setSpeed(self,speed):
+		self.speed = speed
 
 	def getPosition(self):
 		return self.partPosition
 	def getPositionX(self):
 		return self.partPosition[0]
-	def getPositionX(self):
+	def getPositionY(self):
 		return self.partPosition[1]
+	def getSpeed(self):
+		return self.speed

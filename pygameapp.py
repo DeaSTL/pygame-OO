@@ -1,4 +1,5 @@
 import pygame
+import sys
 
 class App(object):
 	def __init__(self,window_width,window_height,frame_rate):
@@ -11,18 +12,38 @@ class App(object):
 		self.pygame = pygame
 		self.pygame.init()
 
-		self.clock = self.pygame.Clock()
+		self.clock = self.pygame.time.Clock()
 
-		self.display = pygame.display.set_mode(
+		self.pygame.display.init()
+		self.display = self.pygame.display.set_mode(
 			(self.windowWidth,self.windowHeight),
 			self.pygame.RESIZABLE)
 
+
 	def onExecute(self):
 		pass
+	def onStart(self):
+		pass
 	def start(self):
+		self.onStart()
 		while self.running:
+
+			self.display.fill((0,0,0))
 			self.onExecute()
-			self.clock.tick(selfframeRate)
+			self.clock.tick(self.frameRate)
+
+			self.pygame.display.update()
+			
+			for event in self.pygame.event.get():
+				if event.type == self.pygame.QUIT:
+					sys.exit(0)
+				if event.type == self.pygame.VIDEORESIZE:
+					self.display = self.pygame.display.set_mode(
+					(event.w,event.h),
+					self.pygame.RESIZABLE)
+					self.windowWidth = event.w
+					self.windowHeight = event.h
+
 	def getWindowHeight(self): return self.windowHeight
 	def getWindowWidth(self): return self.windowWidth
 	def getFrameRate(self): return self.frameRate
@@ -32,14 +53,12 @@ class App(object):
 
 	def setWindowHeight(self,height):
 		self.windowHeight = height
-		self.display = 
-			self.pygame.display.set_mode(
+		self.display = self.pygame.display.set_mode(
 			(self.windowWidth,height),
 			self.pygame.RESIZABLE)
 	def setWindowWidth(self,width):
 		self.windowWidth = width
-		self.display = 
-			self.pygame.display.set_mode(
+		self.display = self.pygame.display.set_mode(
 			(width,self.windowHeight),
 			self.pygame.RESIZABLE)
 	def setFrameRate(self,frame_rate): self.frameRate = frame_rate
