@@ -12,9 +12,7 @@ class sand(object):
 		self.partX = self.partPosition[0]
 		self.partY = self.partPosition[1]
 
-		self.color = (random.randrange(1,255),
-			random.randrange(1,255),
-			random.randrange(1,255))
+		self.color = (193, 189, 129)
 	def setPosition(self,position):
 		self.partPosition = position
 	def setPositionX(self,positionX):

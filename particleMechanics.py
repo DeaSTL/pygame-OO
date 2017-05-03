@@ -5,11 +5,12 @@ import math
 particle_array = []
 class mechanics(object):
 	def createParticles(self):
-		for i in range(1,500):
+		for i in range(1,1000):
 			global particle_array
 			rand_pos = (random.randrange(0,self.getWindowWidth()),
 				random.randrange(0,self.getWindowHeight()))
 			particle_array.append(particle.sand(rand_pos))
+		return particle_array
 	def reCreateParticles(self):
 		global particle_array
 		particle_array = []
@@ -18,7 +19,7 @@ class mechanics(object):
 	def drawParticles(self):
 		global particle_array
 		for pos in particle_array:
-			self.pygame.draw.rect(self.display,pos.color,(pos.getPosition()[0],pos.getPosition()[1],5,5),0)
+			self.pygame.draw.rect(self.display,pos.color,(pos.getPosition()[0],pos.getPosition()[1],1,1),0)
 	def applyForce(self):
 		global particle_array
 		for part in particle_array:
@@ -39,11 +40,12 @@ class mechanics(object):
 			if part.getPositionY() < 0:
 				part.setSpeed(-part.getSpeed())
 				part.setAngle(part.getAngle()+90)
-			if ma.distance(part.getPositionX(),part.getPositionY(),mouse_pos[0],mouse_pos[1]) < 10:
-				part.setSpeed(0)
-				self.pullToPoint(mouse_pos[0],mouse_pos[1])
-			elif not ma.distance(part.getPositionX(),part.getPositionY(),mouse_pos[0],mouse_pos[1]) < 50:
-				part.setSpeed(5)
+			if self.pygame.mouse.get_focused():	
+				if ma.distance(part.getPositionX(),part.getPositionY(),mouse_pos[0],mouse_pos[1]) < 10:
+					part.setSpeed(0)
+					self.pullToPoint(mouse_pos[0],mouse_pos[1])
+				elif not ma.distance(part.getPositionX(),part.getPositionY(),mouse_pos[0],mouse_pos[1]) < 50:
+					part.setSpeed(5)
 
 			
 	def pullToPoint(self,x,y):
@@ -53,4 +55,5 @@ class mechanics(object):
 		for part in particle_array:
 			part.setPosition((x,y))
 	def drawMouseRange(self):
-		self.pygame.draw.circle(self.display,(10,10,10),self.pygame.mouse.get_pos(),10,0)
+		if self.pygame.mouse.get_focused():
+			self.pygame.draw.circle(self.display,(10,10,10),self.pygame.mouse.get_pos(),10,0)
