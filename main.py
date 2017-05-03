@@ -35,7 +35,7 @@ class main(pygameapp.App):
 			if part.getPositionY() < 0:
 				part.setSpeed(-part.getSpeed())
 				part.setAngle(part.getAngle()+90)
-			if ma.distance(part.getPositionX(),part.getPositionY(),mouse_pos[0],mouse_pos[1]) < 100:
+			if ma.distance(part.getPositionX(),part.getPositionY(),mouse_pos[0],mouse_pos[1]) < 50:
 				part.setPositionX(part.getPositionX()+100*part.getSlope()[0])
 				part.setPositionY(part.getPositionY()+100*part.getSlope()[1])
 	def onStart(self):
@@ -46,5 +46,5 @@ class main(pygameapp.App):
 		self.applyForce()
 		self.checkCollision()
 		
-main(500,500,20).start()
+main(500,500,60).start()
 
