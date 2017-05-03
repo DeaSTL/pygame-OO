@@ -7,7 +7,7 @@ largeSand = []
 
 class mechanics(object):
 	def createParticles(self):
-		for i in range(1,1000):
+		for i in range(1,50):
 			global particle_array
 			rand_pos = (random.randrange(0,self.getWindowWidth()),
 				random.randrange(0,self.getWindowHeight()))
@@ -47,10 +47,11 @@ class mechanics(object):
 			if part.getPositionY() < 0:
 				part.setSpeed(-part.getSpeed())
 				part.setAngle(part.getAngle()+90)
-			for i in range(0,len(largeSand)):
-				if part.rect.collides(particle_array[i].rect):
-					print("collides")
-			#if self.pygame.mouse.get_focused():	
+			for cpart in particle_array:
+				if cpart.collides(part.getRect()):
+					self.repelFromPoint(cpart,part.getPositionX(),part.getPositionY())
+				#print(dir(particle_array[i]))
+				
 			#	if ma.distance(part.getPositionX(),part.getPositionY(),mouse_pos[0],mouse_pos[1]) < 10:
 			#		part.setSpeed(0)
 			#		self.pullToPoint(mouse_pos[0],mouse_pos[1])
@@ -58,7 +59,9 @@ class mechanics(object):
 			#		part.setSpeed(5)
 	def pullToPoint(self,x,y):
 		for part in particle_array:
-			part.setAngle(math.degrees(math.atan2(part.getPositionX()-x,part.getPositionY()-y))-90)
+			part.setAngle(-math.degrees(math.atan2(part.getPositionX()-x,part.getPositionY()-y))-90)
+	def repelFromPoint(self,part,x,y):
+		part.setAngle(math.degrees(math.atan2(part.getPositionX()-x,part.getPositionY()-y))-90)
 	def moveToPoint(self,x,y):
 		for part in particle_array:
 			part.setPosition((x,y))

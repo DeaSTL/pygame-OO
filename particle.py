@@ -8,7 +8,7 @@ class particle(object):
 		self.angle = 0
 		self.size = 1
 
-		self.rect = Rect(partPosition[0],partPosition[1],self.size,self,size)
+		self.rect = Rect(self.partPosition[0],self.partPosition[1],self.size,self.size)
 
 		self.XSlope = math.cos(math.radians(self.angle)) 
 		self.YSlope = math.sin(math.radians(self.angle))
@@ -48,15 +48,19 @@ class particle(object):
 		return self.size
 	def getType(self):
 		return self.name
+	def getRect(self):
+		return self.rect
 	def collides(self,rect):
-		return object.colliderect(rect)
+		return rect.collidepoint(self.partPosition[0],self.partPosition[1])
 
 class sand(particle,object):
 	def __init__(self,position):
 		self.partPosition = list(position)
 		self.speed = 5 #random.randrange(1,15)
 		self.angle = random.randrange(1,360)
-		self.size = 1
+		self.size = 5
+
+		self.rect = Rect(self.partPosition[0],self.partPosition[1],self.size,self.size)
 
 		self.XSlope = math.cos(math.radians(self.angle)) 
 		self.YSlope = math.sin(math.radians(self.angle))
@@ -73,6 +77,8 @@ class sandLarge(particle,object):
 		self.speed = 5 #random.randrange(1,15)
 		self.angle = direction
 		self.size = 20
+
+		self.rect = Rect(self.partPosition[0],self.partPosition[1],self.size,self.size)
 
 		self.XSlope = math.cos(math.radians(self.angle)) 
 		self.YSlope = math.sin(math.radians(self.angle))
