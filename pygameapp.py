@@ -6,6 +6,7 @@ class App(object):
 		self.windowWidth = window_width
 		self.windowHeight = window_height
 		self.frameRate = frame_rate
+		self.frameCount = 0
 
 		self.running = True
 
@@ -31,6 +32,7 @@ class App(object):
 	def start(self):
 		self.onStart()
 		while self.running:
+			self.frameCount += 1
 			self.ticks = self.pygame.time.get_ticks()
 			self.display.fill((0,0,0))
 			self.onExecute()
