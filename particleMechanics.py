@@ -5,9 +5,16 @@ import math
 particle_array = []
 largeSand = []
 
+
 class mechanics(object):
+	def initializeMechanics(self):
+		self.debugInfo = {}
+		self.debugInfo["added_particles"] = 0
+		self.debugInfo["collisions"] = 0
+	def getDebugInfo(self):
+		return self.debugInfo
 	def createParticles(self):
-		for i in range(1,10000):
+		for i in range(1,50):
 			global particle_array
 			rand_pos = (random.randrange(0,self.getWindowWidth()),
 				random.randrange(0,self.getWindowHeight()))
@@ -17,13 +24,14 @@ class mechanics(object):
 		global particle_array
 		particle_array = []
 		self.createParticles()
+
 	def addParticle(self,particle):
 		particle_array.append(particle)
 		if particle.getType() == "sand_large":
 			largeSand.append(particle)
 		else:
 			particle_array.append(particle)
-	
+		self.debugInfo["added_particles"] += 1
 
 	def drawParticles(self):
 		global particle_array
@@ -38,27 +46,21 @@ class mechanics(object):
 		for part in particle_array:
 			mouse_pos = self.pygame.mouse.get_pos()
 			if part.getPositionX() > self.getWindowWidth():
-				part.setSpeed(-part.getSpeed())
-				part.setAngle(part.getAngle()+90)
+				self.reflectParticle(part)
+				self.debugInfo["collisions"]+=1
 			if part.getPositionX() < 0:
-				part.setSpeed(-part.getSpeed())
-				part.setAngle(part.getAngle()+90)
+				self.reflectParticle(part)
+				self.debugInfo["collisions"]+=1
 			if part.getPositionY() > self.getWindowHeight():
-				part.setSpeed(-part.getSpeed())
-				part.setAngle(part.getAngle()+90)
+				self.reflectParticle(part)
+				self.debugInfo["collisions"]+=1
 			if part.getPositionY() < 0:
-				part.setSpeed(-part.getSpeed())
-				part.setAngle(part.getAngle()+90)
-			for largePart in largeSand:
-				if largePart.collides(part):
-					self.repelFromPoint(part,largePart.getPositionX(),largePart.getPositionY())
-				#print(dir(particle_array[i]))
-				
-			#	if ma.distance(part.getPositionX(),part.getPositionY(),mouse_pos[0],mouse_pos[1]) < 10:
-			#		part.setSpeed(0)
-			#		self.pullToPoint(mouse_pos[0],mouse_pos[1])
-			#	elif not ma.distance(part.getPositionX(),part.getPositionY(),mouse_pos[0],mouse_pos[1]) < 50:
-			#		part.setSpeed(5)
+				self.reflectParticle(part)
+				self.debugInfo["collisions"]+=1
+			for lpart in largeSand:
+				if lpart.collides(part):
+					
+
 	def pullToPoint(self,x,y):
 		for part in particle_array:
 			part.setAngle(-math.degrees(math.atan2(part.getPositionX()-x,part.getPositionY()-y))-90)
@@ -67,6 +69,9 @@ class mechanics(object):
 	def moveToPoint(self,x,y):
 		for part in particle_array:
 			part.setPosition((x,y))
+	def reflectParticle(self,part):
+		part.setSpeed(-part.getSpeed())
+		part.setAngle(part.getAngle()+90)
 	def drawMouseRange(self):
 		if self.pygame.mouse.get_focused():
 			self.pygame.draw.circle(self.display,(10,10,10),self.pygame.mouse.get_pos(),10,0)

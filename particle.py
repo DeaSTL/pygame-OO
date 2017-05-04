@@ -57,10 +57,10 @@ class particle(object):
 		rect1 = self.rect
 		rect1Pos = self.getPosition()
 
-		return (rect2.left > rect1.right or
+		return (rect2.left+rect2Pos[0] > rect1.right+rect1Pos[0] or
 				rect2.right+rect2Pos[0] < rect1.left+rect1Pos[0] or
-				rect2.top+rect2Pos[0] > rect1.bottom+rect1Pos[0] or 
-				rect2.bottom < rect1.top)
+				rect2.top+rect2Pos[1] > rect1.bottom +	rect1Pos[1] or 
+				rect2.bottom +rect2Pos[1] < rect1.top +rect1Pos[1])
 
 class sand(particle,object):
 	def __init__(self,position):
