@@ -7,7 +7,7 @@ largeSand = []
 
 class mechanics(object):
 	def createParticles(self):
-		for i in range(1,50):
+		for i in range(1,10000):
 			global particle_array
 			rand_pos = (random.randrange(0,self.getWindowWidth()),
 				random.randrange(0,self.getWindowHeight()))
@@ -19,9 +19,11 @@ class mechanics(object):
 		self.createParticles()
 	def addParticle(self,particle):
 		particle_array.append(particle)
-		for i in range(0,len(particle_array)):
-			if particle_array[i].getType() == "sand_large":
-				largeSand.append(i)
+		if particle.getType() == "sand_large":
+			largeSand.append(particle)
+		else:
+			particle_array.append(particle)
+	
 
 	def drawParticles(self):
 		global particle_array
@@ -47,9 +49,9 @@ class mechanics(object):
 			if part.getPositionY() < 0:
 				part.setSpeed(-part.getSpeed())
 				part.setAngle(part.getAngle()+90)
-			for cpart in particle_array:
-				if cpart.collides(part.getRect()):
-					self.repelFromPoint(cpart,part.getPositionX(),part.getPositionY())
+			for largePart in largeSand:
+				if largePart.collides(part):
+					self.repelFromPoint(part,largePart.getPositionX(),largePart.getPositionY())
 				#print(dir(particle_array[i]))
 				
 			#	if ma.distance(part.getPositionX(),part.getPositionY(),mouse_pos[0],mouse_pos[1]) < 10:

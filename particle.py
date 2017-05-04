@@ -50,15 +50,24 @@ class particle(object):
 		return self.name
 	def getRect(self):
 		return self.rect
-	def collides(self,rect):
-		return rect.collidepoint(self.partPosition[0],self.partPosition[1])
+	def collides(self,particle):
+
+		rect2 = particle.getRect()
+		rect2Pos = particle.getPosition()
+		rect1 = self.rect
+		rect1Pos = self.getPosition()
+
+		return (rect2.left > rect1.right or
+				rect2.right+rect2Pos[0] < rect1.left+rect1Pos[0] or
+				rect2.top+rect2Pos[0] > rect1.bottom+rect1Pos[0] or 
+				rect2.bottom < rect1.top)
 
 class sand(particle,object):
 	def __init__(self,position):
 		self.partPosition = list(position)
 		self.speed = 5 #random.randrange(1,15)
 		self.angle = random.randrange(1,360)
-		self.size = 5
+		self.size = 1
 
 		self.rect = Rect(self.partPosition[0],self.partPosition[1],self.size,self.size)
 
