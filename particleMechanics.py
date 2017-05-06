@@ -58,12 +58,11 @@ class mechanics(object):
 				self.reflectParticle(part)
 				self.debugInfo["collisions"]+=1
 			for lpart in largeSand:
-				if lpart.collides(part):
+				pass
 					
 
 	def pullToPoint(self,x,y):
-		for part in particle_array:
-			part.setAngle(-math.degrees(math.atan2(part.getPositionX()-x,part.getPositionY()-y))-90)
+		pass
 	def repelFromPoint(self,part,x,y):
 		part.setAngle(math.degrees(math.atan2(part.getPositionX()-x,part.getPositionY()-y))-90)
 	def moveToPoint(self,x,y):
